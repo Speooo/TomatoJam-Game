@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
         input = GetComponent<PlayerInput>();
         motor = GetComponent<PlayerMotor>();
         playerCam = GetComponent<PlayerCamera>();
+        playerCam.enabled = false;
     }
 
     private void Start()
@@ -48,6 +49,11 @@ public class PlayerController : MonoBehaviour
 
         cameraPivot.localRotation = Quaternion.AngleAxis(pitch, Vector3.right);
         transform.localRotation = Quaternion.AngleAxis(yaw, Vector3.up);
+    }
+    [ContextMenu("pick up camera")]
+    public void PickUpCamera()
+    {
+        playerCam.enabled = true;
     }
 }
 

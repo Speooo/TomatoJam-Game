@@ -11,8 +11,6 @@ public class PlayerGroundMovement : IMovement
     private float moveSpeed;
     private float jumpForce;
 
-    private bool isGrounded;
-
     public void Enter(PlayerMotor motor)
     {
         ground = motor.GroundLayer;
@@ -41,11 +39,10 @@ public class PlayerGroundMovement : IMovement
         }
         else
         {
-            motor.CurrentVelocity += motor.Gravity * dt;
+            motor.SetMoveState(new PlayerAirMovement());
         }
 
         motor.transform.position += motor.CurrentVelocity * dt;
-        isGrounded = CheckGrounded(motor);
     }
 
     public void Exit(PlayerMotor motor)

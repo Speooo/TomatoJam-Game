@@ -3,14 +3,12 @@ using UnityEngine;
 
 public class ActiveMask : MonoBehaviour
 {
-    [SerializeField] private GameObject maskProtoype;
     [SerializeField] private MaskHolder playerMaskHolder;
 
     public static ActiveMask Instance;
 
-    public event Action<Mask> OnEnemyDied;
+    public event Action OnEnemyDied;
 
-    public Mask currentMask { get; private set; }
     public MaskHolder CurrentMaskHolder { get; private set; }
     public MaskHolder CurrentMaskChaser { get; private set; }
 
@@ -24,7 +22,7 @@ public class ActiveMask : MonoBehaviour
         return CurrentMaskHolder == holder;
     }
 
-    public void GiveMask(Mask mask, MaskHolder newHolder)
+    public void GiveMask(MaskHolder newHolder)
     {
         if (CurrentMaskHolder != null)
             CurrentMaskHolder.OnMaskLost();
@@ -32,27 +30,18 @@ public class ActiveMask : MonoBehaviour
             CurrentMaskHolder = playerMaskHolder;
 
         CurrentMaskChaser = CurrentMaskHolder;
-        currentMask = mask;
         CurrentMaskHolder = newHolder;
 
-        CurrentMaskHolder.OnMaskGained(mask);
+        CurrentMaskHolder.OnMaskGained();
     }
 
     public void GiveMaskPermanentlyToPlayer()
     {
-        if (currentMask != null)
-            currentMask.permanentlyOwned = true;
-
-        OnEnemyDied?.Invoke(currentMask);
-
-        currentMask = null;
+        OnEnemyDied?.Invoke();
     }
     
     public void BeginNewEnemyCombat(MaskHolder holder)
     {
-        Mask newMask = Instantiate(maskProtoype, new Vector3(0f, 0f, 0f), Quaternion.identity).GetComponent<Mask>();
-        currentMask = newMask;
-
-        GiveMask(currentMask, holder);
+        GiveMask(holder);
     }
 }

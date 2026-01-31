@@ -2,46 +2,59 @@ using UnityEngine;
 
 public class MaskHolder : MonoBehaviour
 {
-    private Mask heldMask;
-    private bool isPlayer;
+    private bool holdingMask;
+    private bool isEnemy;
+    private EnemyController enemy;
 
     private void Start()
     {
-        isPlayer = TryGetComponent<PlayerController>(out _);
-    }
-    
-    public void TakeDamage()
-    {
-        Debug.Log(transform.name + " took damage");
-        if (ActiveMask.Instance.AmIHoldingMask(this))
-            DropMask();
-        else
-            Die();
+        isEnemy = TryGetComponent<EnemyController>(out enemy);
     }
 
-    private void DropMask()
+    private void Update()
     {
-        ActiveMask.Instance.GiveMask(heldMask, ActiveMask.Instance.CurrentMaskChaser);
+        if (!isEnemy)
+        {
+            return;
+        }
+
+        if (!holdingMask && enemy.IsActive)
+        {
+            if (enemy.LifeForceDepleted())
+                Die();
+        }
+    }
+
+    public void TakeDamage()
+    {
+        if (ActiveMask.Instance.AmIHoldingMask(this))
+            ExchangeMask();
+    }
+
+    private void ExchangeMask()
+    {
+        ActiveMask.Instance.GiveMask(ActiveMask.Instance.CurrentMaskChaser);
     }
 
     private void Die()
     {
-        //if (!isPlayer)
-        //    ActiveMask.Instance.GiveMaskPermanentlyToPlayer();
-        // triger checkpoint reset
+        if (isEnemy && !holdingMask)
+        {
+            ActiveMask.Instance.GiveMaskPermanentlyToPlayer();
+            Destroy(enemy.gameObject);
+        }
     }
 
     public void OnMaskLost()
     {
-        heldMask = null;
+        holdingMask = false;
 
-        // enter aggro state
+        if (isEnemy)
+            enemy.SwitchState(EnemyState.Aggro);
     }
 
-    public void OnMaskGained(Mask mask)
+    public void OnMaskGained()
     {
-        heldMask = mask;
-
-        // do mask visuals
+        holdingMask = true;
     }
 }

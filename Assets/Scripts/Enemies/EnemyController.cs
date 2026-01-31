@@ -3,9 +3,11 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     [SerializeField] private float memoryTimeMax;
+    [SerializeField] private float lifeForceMax;
 
     public Transform Player => player;
     public EnemySensors Sensors => sensors;
+    public bool IsActive => isActive;
 
     private Transform player;
     private EnemyMotor motor;
@@ -14,6 +16,7 @@ public class EnemyController : MonoBehaviour
 
     private bool isActive = false;
     private float memoryTimer;
+    private float lifeForce;
 
     private EnemyState enemyState = EnemyState.None;
 
@@ -23,6 +26,8 @@ public class EnemyController : MonoBehaviour
         motor = GetComponent<EnemyMotor>();
         sensors = GetComponent<EnemySensors>();
         melee = GetComponent<EnemyMelee>();
+
+        lifeForce = lifeForceMax;
     }
 
     private void Update()
@@ -88,7 +93,7 @@ public class EnemyController : MonoBehaviour
                 break;
         }
     }
-    [ContextMenu("Initialise Enemy")]
+    
     public void InitialiseEnemy()
     {
         isActive = true;
@@ -100,7 +105,14 @@ public class EnemyController : MonoBehaviour
         SwitchState(EnemyState.Aggro);
     }
 
-    private void SwitchState(EnemyState state)
+    public bool LifeForceDepleted()
+    {
+        lifeForce -= Time.deltaTime;
+        Debug.Log("depleting life force");
+        return lifeForce <= 0f;
+    }
+
+    public void SwitchState(EnemyState state)
     {
         if (enemyState == EnemyState.Aggro)
             return;

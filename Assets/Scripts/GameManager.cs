@@ -10,9 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private EnemyController enemy2Controller;
     [SerializeField] private EnemyController enemy3Controller;
 
-    private bool isFirstEnemyDefeated = false;
-    private bool isSecondEnemyDefeated = false;
-    private bool isThirdEnemyDefeated = false;
+    private int masksCollected = 0;
 
     private void Start()
     {
@@ -21,20 +19,9 @@ public class GameManager : MonoBehaviour
         enemy1Trigger.OnPlayerEnterTrigger += AreaEnterTrigger;
     }
 
-    private void OnEnemyDeath(Mask mask)
+    private void OnEnemyDeath()
     {
-        if (!isFirstEnemyDefeated)
-        {
-            isFirstEnemyDefeated = true;
-        }
-        else if (!isSecondEnemyDefeated)
-        {
-            isSecondEnemyDefeated = true;
-        }
-        else if (!isThirdEnemyDefeated)
-        {
-            isThirdEnemyDefeated = true;
-        }
+        masksCollected++; Debug.Log("player defeated the enemy and collected the mask");
     }
 
     private void AreaEnterTrigger(int index)
