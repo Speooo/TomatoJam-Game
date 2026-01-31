@@ -376,7 +376,7 @@ MonoBehaviour:
     m_Bits: 64
   cameraCenter: {x: 0, y: 3, z: 6}
   cameraExtents: {x: 7, y: 5, z: 10}
-  cameraCooldown: 5
+  cameraCooldown: 20
 --- !u!114 &7385060750165859751
 MonoBehaviour:
   m_ObjectHideFlags: 0
