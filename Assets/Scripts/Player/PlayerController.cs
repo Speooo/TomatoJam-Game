@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private PlayerInput input;
     private PlayerMotor motor;
     private PlayerCamera playerCam;
+    private PlayerInteract interact;
 
     private float pitch;
     private float yaw;
@@ -20,6 +21,8 @@ public class PlayerController : MonoBehaviour
         input = GetComponent<PlayerInput>();
         motor = GetComponent<PlayerMotor>();
         playerCam = GetComponent<PlayerCamera>();
+        interact = GetComponent<PlayerInteract>();
+
         playerCam.enabled = false;
     }
 
@@ -33,9 +36,17 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        // send inputs over to motor
         motor.SetInput(input.FrameInput);
+
+        // check left click for camera flash
         playerCam.HandleCamera(input.FrameInput.Attack);
+
+        // move camera / player transform from mouse delta
         HandleLook(input.FrameInput.Look);
+
+        // check for interact key
+        interact.HandleInteract(input.FrameInput.Interact);
     }
 
     private void HandleLook(Vector2 mouseDelta)

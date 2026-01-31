@@ -16,7 +16,8 @@ public class GameManager : MonoBehaviour
     {
         ActiveMask.Instance.OnEnemyDied += OnEnemyDeath;
 
-        enemy1Trigger.OnPlayerEnterTrigger += AreaEnterTrigger;
+        if (enemy1Controller != null)
+            enemy1Trigger.OnPlayerEnterTrigger += AreaEnterTrigger;
     }
 
     private void OnEnemyDeath()
