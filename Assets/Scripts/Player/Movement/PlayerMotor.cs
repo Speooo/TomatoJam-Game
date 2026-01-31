@@ -1,46 +1,61 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.UI.Image;
 
+[RequireComponent(typeof(CharacterController))]
 public class PlayerMotor : MonoBehaviour
 {
-    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask ground;
+
+    [Header("Movement")]
     [SerializeField] private float movementSpeed;
-    [SerializeField] private float airAcceleration;
     [SerializeField] private float jumpForce;
     [SerializeField] private float gravityStrength;
 
-    public Vector3 CurrentVelocity;
+    private CharacterController controller;
+    private FrameInput input;
 
-    public LayerMask GroundLayer => groundLayer;
-    public float MovementSpeed => movementSpeed;
-    public float AirAcceleration => airAcceleration;
-    public float JumpForce => jumpForce;
-    public Vector3 Gravity => new Vector3(0f, gravityStrength, 0f);
+    private Vector3 velocity;
+    private float groundedDistanceCheck = 0.2f;
 
-    private FrameInput cachedInput;
-    private IMovement curMoveMode = new PlayerGroundMovement();
-
-    private void Start()
+    private void Awake()
     {
-        SetMoveState(new PlayerGroundMovement());
+        controller = GetComponent<CharacterController>();
     }
 
-    public void SetInput(FrameInput input)
+    public void SetInput(FrameInput frameInput)
     {
-        cachedInput = input;
+        input = frameInput;
     }
 
     private void Update()
     {
-        curMoveMode?.Tick(this, cachedInput, Time.deltaTime);
+        HandleMovement();
+        HandleGravityAndJump();
     }
 
-    public void SetMoveState(IMovement move)
+    private void HandleMovement()
     {
-        if (curMoveMode == move)
-            return;
+        Vector3 move = transform.right * input.Move.x + transform.forward * input.Move.y;
 
-        curMoveMode?.Exit(this);
-        curMoveMode = move;
-        curMoveMode.Enter(this);
+        controller.Move(movementSpeed * Time.deltaTime * move);
+    }
+
+    private void HandleGravityAndJump()
+    {
+        if (input.Jump && CheckGrounded())
+            velocity.y = jumpForce;
+
+        velocity.y += gravityStrength * Time.deltaTime;
+
+        controller.Move(velocity * Time.deltaTime);
+
+        if (controller.isGrounded && velocity.y < 0f)
+            velocity.y = -2f;
+    }
+
+    private bool CheckGrounded() 
+    {
+        return Physics.Raycast(transform.position + Vector3.up * 0.1f, Vector3.down, groundedDistanceCheck, ground, QueryTriggerInteraction.Ignore); 
     }
 }
