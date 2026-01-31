@@ -11,12 +11,17 @@ public class PlayerMotor : MonoBehaviour
     [SerializeField] private float movementSpeed;
     [SerializeField] private float jumpForce;
     [SerializeField] private float gravityStrength;
+    [SerializeField] private AudioClip footstep1;
+    [SerializeField] private AudioClip footstep2;
 
     private CharacterController controller;
     private FrameInput input;
 
     private Vector3 velocity;
     private float groundedDistanceCheck = 0.2f;
+
+    private float footstepTriggerTimer;
+    private float footstepInterval = 0.5f;
 
     private void Awake()
     {
@@ -38,6 +43,11 @@ public class PlayerMotor : MonoBehaviour
     {
         Vector3 move = transform.right * input.Move.x + transform.forward * input.Move.y;
 
+        if (input.Move.sqrMagnitude > 0.001f)
+        {
+            PlayFoostepAudio();
+        }
+
         controller.Move(movementSpeed * Time.deltaTime * move);
     }
 
@@ -52,6 +62,22 @@ public class PlayerMotor : MonoBehaviour
 
         if (controller.isGrounded && velocity.y < 0f)
             velocity.y = -2f;
+    }
+
+    private void PlayFoostepAudio()
+    {
+        footstepTriggerTimer -= Time.deltaTime;
+        if (footstepTriggerTimer < 0f)
+        {
+            int index = Random.Range(0, 2);
+
+            if (index == 0)
+                AudioManager.Instance.PlaySfx2D(footstep1, 0.25f);
+            else
+                AudioManager.Instance.PlaySfx2D(footstep2, 0.25f);
+
+            footstepTriggerTimer = footstepInterval;
+        }
     }
 
     private bool CheckGrounded() 

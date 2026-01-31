@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private EnemyController enemy2Controller;
     [SerializeField] private EnemyController enemy3Controller;
 
-    private int masksCollected = 0;
+    public static int MasksCollected { get; private set; } = 0;
 
     private void Start()
     {
@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
 
     private void OnEnemyDeath()
     {
-        masksCollected++; Debug.Log("player defeated the enemy and collected the mask");
+        MasksCollected++; Debug.Log("player defeated the enemy and collected the mask");
     }
 
     private void AreaEnterTrigger(int index)

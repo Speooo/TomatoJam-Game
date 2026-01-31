@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
@@ -7,8 +8,11 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private Vector3 cameraCenter;
     [SerializeField] private Vector3 cameraExtents;
     [SerializeField] private float cameraCooldown;
+    [SerializeField] private AudioClip cameraFlash;
+    [SerializeField] private GameObject flashLight;
 
     private float cameraTimer;
+    private float flashDuration = 0.2f;
 
     private void OnEnable()
     {
@@ -28,14 +32,30 @@ public class PlayerCamera : MonoBehaviour
 
         if (attack)
         {
+            StartCoroutine(PlayCameraFlash());
+
             Collider[] colliders = Physics.OverlapBox(transform.TransformPoint(cameraCenter), cameraExtents * 0.5f, transform.rotation, enemyLayer);
 
             foreach (Collider collider in colliders)
             {
                 collider.GetComponent<MaskHolder>().TakeDamage();
             }
-            Debug.Log("Flashed camera");
+            AudioManager.Instance.PlaySfx2D(cameraFlash, 0.25f);
             cameraTimer = cameraCooldown;
         }
+    }
+
+    private IEnumerator PlayCameraFlash()
+    {
+        flashLight.SetActive(true);
+        float t = 0f;
+
+        while (t < flashDuration)
+        {
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        flashLight.SetActive(false);
     }
 }
