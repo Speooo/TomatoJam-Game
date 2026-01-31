@@ -14,7 +14,7 @@ public class PlayerMotor : MonoBehaviour
     public float MovementSpeed => movementSpeed;
     public float AirAcceleration => airAcceleration;
     public float JumpForce => jumpForce;
-    public float Gravity => gravityStrength;
+    public Vector3 Gravity => new Vector3(0f, gravityStrength, 0f);
 
     private FrameInput cachedInput;
     private IMovement curMoveMode = new PlayerGroundMovement();

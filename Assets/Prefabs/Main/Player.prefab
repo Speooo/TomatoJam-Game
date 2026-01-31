@@ -149,6 +149,8 @@ GameObject:
   - component: {fileID: 5485935891558229828}
   - component: {fileID: 3924257972544752036}
   - component: {fileID: 6902086807007801627}
+  - component: {fileID: 3359026257379905478}
+  - component: {fileID: 7385060750165859751}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -222,6 +224,36 @@ MonoBehaviour:
   jumpForce: 10
   gravityStrength: -30
   CurrentVelocity: {x: 0, y: 0, z: 0}
+--- !u!114 &3359026257379905478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5230727364238106318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94c721a2ef2d3224e8108bd1fd99184b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCamera
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  cameraCenter: {x: 0, y: 3, z: 6}
+  cameraExtents: {x: 7, y: 5, z: 10}
+  cameraCooldown: 5
+--- !u!114 &7385060750165859751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5230727364238106318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7113e432f9620b343b811596878dfd11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskHolder
 --- !u!1 &5507668384017973366
 GameObject:
   m_ObjectHideFlags: 0

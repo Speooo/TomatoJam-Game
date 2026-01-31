@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 
     private PlayerInput input;
     private PlayerMotor motor;
+    private PlayerCamera playerCam;
 
     private float pitch;
     private float yaw;
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour
     {
         input = GetComponent<PlayerInput>();
         motor = GetComponent<PlayerMotor>();
+        playerCam = GetComponent<PlayerCamera>();
     }
 
     private void Start()
@@ -31,6 +33,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         motor.SetInput(input.FrameInput);
+        playerCam.HandleCamera(input.FrameInput.Attack);
         HandleLook(input.FrameInput.Look);
     }
 

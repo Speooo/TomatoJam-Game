@@ -41,7 +41,7 @@ public class PlayerGroundMovement : IMovement
         }
         else
         {
-            motor.CurrentVelocity.y += motor.Gravity * dt;
+            motor.CurrentVelocity += motor.Gravity * dt;
         }
 
         motor.transform.position += motor.CurrentVelocity * dt;

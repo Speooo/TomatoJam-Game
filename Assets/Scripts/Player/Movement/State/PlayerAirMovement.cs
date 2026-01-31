@@ -21,13 +21,13 @@ public class PlayerAirMovement : IMovement
 
         if (horizontal.sqrMagnitude > 0.001f && moveDir.sqrMagnitude > 0.001f)
         {
-            Vector3 desiredDir = (motor.transform.rotation * moveDir).normalized;
+            Vector3 desiredDir = (motor.transform.rotation * moveDir.normalized).normalized;
 
             horizontal = Vector3.RotateTowards(horizontal, desiredDir * horizontal.magnitude, acceleration * dt, 0f);
         }
 
         motor.CurrentVelocity = horizontal + Vector3.up * motor.CurrentVelocity.y;
-        motor.CurrentVelocity.y += motor.Gravity * dt;
+        motor.CurrentVelocity += motor.Gravity * dt;
 
         motor.transform.position += motor.CurrentVelocity * dt;
 
