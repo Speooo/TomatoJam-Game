@@ -22,7 +22,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: M_Faceless_Cloak
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-  m_Parent: {fileID: -2972419104574288416, guid: 5b861772faa7f3a48b8b6f8a25c1b1d1, type: 3}
+  m_Parent: {fileID: 2100000, guid: 177d2beb074012d478d870b523688697, type: 2}
   m_ModifiedSerializedProperties: 8
   m_ValidKeywords: []
   m_InvalidKeywords: []
