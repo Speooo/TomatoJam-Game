@@ -8,11 +8,8 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField] private AudioSource sourceMusic;
     [SerializeField] private AudioSource source2D;
-    [SerializeField] private float sfxVolume = 1f;
-    [SerializeField] private float musicVolume = 1f;
-
-    private float musicFadeDuration = 3f;
-    private Coroutine musicFadeRoutine;
+    public float sfxVolume = 1f;
+    public float musicVolume = 1f;
 
     private void Awake()
     {
@@ -20,6 +17,8 @@ public class AudioManager : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
+
+        DontDestroyOnLoad(gameObject);
     }
 
     public void PlaySfx3D(AudioClip clip, Vector3 position, float volume = 1f)
@@ -33,41 +32,30 @@ public class AudioManager : MonoBehaviour
     {
         if (clip == null) return;
 
-        source2D.PlayOneShot(clip, volume);
+        source2D.PlayOneShot(clip, volume * sfxVolume);
     }
 
-    public void PlayMusic(AudioClip clip)
+    public void IncreaseSFXVolume()
     {
-        if (musicFadeRoutine != null)
-            StopCoroutine(musicFadeRoutine);
-
-        musicFadeRoutine = StartCoroutine(FadeToMusic(clip));
+        sfxVolume = Mathf.Clamp01(sfxVolume + 0.1f);
+        source2D.volume = sfxVolume;
     }
 
-    private IEnumerator FadeToMusic(AudioClip next)
+    public void DecreaseSFXVolume()
     {
-        float t = 0f;
+        sfxVolume = Mathf.Clamp01(sfxVolume - 0.1f);
+        source2D.volume = sfxVolume;
+    }
 
-        // Fade out
-        while (t < musicFadeDuration)
-        {
-            t += Time.deltaTime;
-            sourceMusic.volume = Mathf.Lerp(musicVolume, 0f, t / musicFadeDuration);
-            yield return null;
-        }
-        sourceMusic.volume = 0f;
+    public void IncreaseMusicVolume()
+    {
+        musicVolume = Mathf.Clamp01(musicVolume + 0.1f);
+        sourceMusic.volume = musicVolume;
+    }
 
-        sourceMusic.clip = next;
-        sourceMusic.Play();
-
-        // Fade in
-        t = 0f;
-        while (t < musicFadeDuration)
-        {
-            t += Time.deltaTime;
-            sourceMusic.volume = Mathf.Lerp(0f, musicVolume, t / musicFadeDuration);
-            yield return null;
-        }
+    public void DecreaseMusicVolume()
+    {
+        musicVolume = Mathf.Clamp01(musicVolume - 0.1f);
         sourceMusic.volume = musicVolume;
     }
 }
