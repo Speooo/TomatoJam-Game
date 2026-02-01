@@ -137,15 +137,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 0f45f643dff98964d8541049e24f7e83, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.9689766
+      value: -0.28
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0f45f643dff98964d8541049e24f7e83, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.29
+      value: -0.31
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0f45f643dff98964d8541049e24f7e83, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.6883945
+      value: 52.26
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0f45f643dff98964d8541049e24f7e83, type: 3}
       propertyPath: m_LocalRotation.w
@@ -181,16 +181,84 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 4b9d76c3bec35b94db03bf0b9ee884a6, type: 2}
     - target: {fileID: 919132149155446097, guid: 0f45f643dff98964d8541049e24f7e83, type: 3}
       propertyPath: m_Name
-      value: Props_Chandelier
+      value: Chandelier
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0f45f643dff98964d8541049e24f7e83, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: -1488513673174624342, guid: 0f45f643dff98964d8541049e24f7e83, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0f45f643dff98964d8541049e24f7e83, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1131534468776301797}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0f45f643dff98964d8541049e24f7e83, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7813088591218256334}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0f45f643dff98964d8541049e24f7e83, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 708377089817358765}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0f45f643dff98964d8541049e24f7e83, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4913237459506230498}
   m_SourcePrefab: {fileID: 100100000, guid: 0f45f643dff98964d8541049e24f7e83, type: 3}
+--- !u!1 &5795416772122797482 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 0f45f643dff98964d8541049e24f7e83, type: 3}
+  m_PrefabInstance: {fileID: 6677744270628444411}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7813088591218256334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5795416772122797482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bf2b0dc92551c24f8b49a58c7cf98db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChandelierInteraction
+  chandelier: {fileID: 708377089817358765}
+--- !u!114 &708377089817358765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5795416772122797482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ccd485189846644e826fd6d66e3c554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChandelierDropQueue
+  fallSpeed: 10
+  explosion: {fileID: 6579182237163914985, guid: 4af07ae68c0444c43b4f22c6478f562e, type: 3}
+  explosionSound: {fileID: 8300000, guid: b2332db68a2ee8e4986361d1b86d8253, type: 3}
+--- !u!65 &4913237459506230498
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5795416772122797482}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4, y: 2, z: 4}
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!4 &6568117932491554576 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0f45f643dff98964d8541049e24f7e83, type: 3}

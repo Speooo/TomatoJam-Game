@@ -24,6 +24,7 @@ public class PlayerInput : MonoBehaviour
             Interact = input.Player.Interact.WasPressedThisFrame(),
             Jump = input.Player.Jump.WasPressedThisFrame(),
             Attack = input.Player.Attack.WasPressedThisFrame(),
+            Sprint = input.Player.Sprint.IsPressed(),
         };
     }
 
@@ -40,4 +41,5 @@ public struct FrameInput
     public bool Interact;
     public bool Jump;
     public bool Attack;
+    public bool Sprint;
 }

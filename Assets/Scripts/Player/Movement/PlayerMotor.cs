@@ -1,6 +1,5 @@
-using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
-using static UnityEngine.UI.Image;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMotor : MonoBehaviour
@@ -9,6 +8,10 @@ public class PlayerMotor : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] private float movementSpeed;
+    [SerializeField] private float sprintSpeed;
+    [SerializeField] private float staminaSecondsTotal;
+    [SerializeField] private float staminaRegenRateMultiplier;
+    [SerializeField] private float sprintCooldownSeconds;
     [SerializeField] private float jumpForce;
     [SerializeField] private float gravityStrength;
     [SerializeField] private AudioClip footstep1;
@@ -22,6 +25,9 @@ public class PlayerMotor : MonoBehaviour
 
     private float footstepTriggerTimer;
     private float footstepInterval = 0.5f;
+
+    private float currentStamina;
+    private bool canSprint = true;
 
     private void Awake()
     {
@@ -48,7 +54,8 @@ public class PlayerMotor : MonoBehaviour
             PlayFoostepAudio();
         }
 
-        controller.Move(movementSpeed * Time.deltaTime * move);
+        float targetSpeed = CheckSprint() ? sprintSpeed : movementSpeed;
+        controller.Move(targetSpeed * Time.deltaTime * move);
     }
 
     private void HandleGravityAndJump()
@@ -78,6 +85,30 @@ public class PlayerMotor : MonoBehaviour
 
             footstepTriggerTimer = footstepInterval;
         }
+    }
+
+    private bool CheckSprint()
+    {
+        if (currentStamina < 0.1f)
+            StartCoroutine(SprintCooldown());
+        
+        if (canSprint && currentStamina > 0 && input.Sprint)
+        {
+            currentStamina -= Time.deltaTime;
+            return true;
+        }
+        else
+        {
+            currentStamina = Mathf.Clamp(currentStamina + Time.deltaTime * staminaRegenRateMultiplier, 0f, staminaSecondsTotal);
+            return false;
+        }
+    }
+
+    private IEnumerator SprintCooldown()
+    {
+        canSprint = false;
+        yield return new WaitForSeconds(sprintCooldownSeconds);
+        canSprint = true;
     }
 
     private bool CheckGrounded() 
