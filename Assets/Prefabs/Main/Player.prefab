@@ -466,6 +466,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   movementSpeed: 7
+  sprintSpeed: 14
+  staminaSecondsTotal: 3
+  staminaRegenRateMultiplier: 1
+  sprintCooldownSeconds: 2
   jumpForce: 10
   gravityStrength: -30
   footstep1: {fileID: 8300000, guid: 6eb1083af3dea2c4287bfd6e7e642ad0, type: 3}

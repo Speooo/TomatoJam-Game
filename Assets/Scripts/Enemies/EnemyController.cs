@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
@@ -93,7 +94,7 @@ public class EnemyController : MonoBehaviour
                 break;
         }
     }
-    
+    [ContextMenu("Initialise")]
     public void InitialiseEnemy()
     {
         isActive = true;
