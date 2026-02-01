@@ -14,8 +14,11 @@ public class EnemyController : MonoBehaviour
     private EnemyMotor motor;
     private EnemySensors sensors;
     private EnemyMelee melee;
+    private EnemyRangedAttack ranged;
+    private NavMeshAgent agent;
 
     private bool isActive = false;
+    private bool isDynamic = false;
     private float memoryTimer;
     private float lifeForce;
 
@@ -24,10 +27,13 @@ public class EnemyController : MonoBehaviour
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        motor = GetComponent<EnemyMotor>();
+        isDynamic = TryGetComponent<EnemyMotor>(out motor);
         sensors = GetComponent<EnemySensors>();
         melee = GetComponent<EnemyMelee>();
-
+        ranged = GetComponent<EnemyRangedAttack>();
+        agent = GetComponent<NavMeshAgent>();
+        if (agent != null)
+            agent.enabled = true;
         lifeForce = lifeForceMax;
     }
 
@@ -35,6 +41,12 @@ public class EnemyController : MonoBehaviour
     {
         if (!isActive)
             return;
+
+        if (!isDynamic)
+        {
+            ranged.HandleRangedAttack();
+            return;
+        }
 
         HandleContext();
 
@@ -53,11 +65,17 @@ public class EnemyController : MonoBehaviour
                 motor.HandleChase(player);
                 melee.HandleMelee();
 
+                if (ranged != null)
+                    ranged.HandleRangedAttack();
+
                 break;
             case EnemyState.Aggro:
 
                 motor.HandleChase(player);
                 melee.HandleMelee();
+
+                if (ranged != null)
+                    ranged.HandleRangedAttack();
 
                 break;
         }
@@ -99,6 +117,7 @@ public class EnemyController : MonoBehaviour
     {
         isActive = true;
         SwitchState(EnemyState.Passive);
+        //SnapAgentToNavMesh(agent);
     }
 
     public void EnemyMaskOff()
@@ -109,7 +128,6 @@ public class EnemyController : MonoBehaviour
     public bool LifeForceDepleted()
     {
         lifeForce -= Time.deltaTime;
-        Debug.Log("depleting life force");
         return lifeForce <= 0f;
     }
 
@@ -122,6 +140,20 @@ public class EnemyController : MonoBehaviour
             return;
 
         enemyState = state;
+    }
+
+    public static void SnapAgentToNavMesh(NavMeshAgent agent)
+    {
+        NavMeshHit hit;
+        // Tries to find nearest valid position within 1 unit
+        if (NavMesh.SamplePosition(agent.transform.position, out hit, 1f, NavMesh.AllAreas))
+        {
+            agent.Warp(hit.position); // instantly moves agent to valid spot
+        }
+        else
+        {
+            Debug.LogWarning("No valid navmesh position found near spawn.");
+        }
     }
 }
 

@@ -6,6 +6,13 @@ public class PedestalMaskInteraction : MonoBehaviour, Interactable
     [SerializeField] private int requiredMasksToActivate;
     [SerializeField] private AudioClip collectSound;
 
+    private PlayerHealth health;
+
+    private void Start()
+    {
+        health = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
+    }
+
     public void Execute()
     {
         if (objectToActivate.activeInHierarchy)
@@ -15,6 +22,11 @@ public class PedestalMaskInteraction : MonoBehaviour, Interactable
         {
             objectToActivate.SetActive(true);
             AudioManager.Instance.PlaySfx3D(collectSound, transform.position + Vector3.up * 3f, 0.25f);
+        }
+
+        if (GameManager.MasksCollected >= 3)
+        {
+            health.Die();
         }
     }
 }

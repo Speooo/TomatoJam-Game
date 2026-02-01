@@ -38,6 +38,10 @@ public class ActiveMask : MonoBehaviour
     public void GiveMaskPermanentlyToPlayer()
     {
         OnEnemyDied?.Invoke();
+
+        CurrentMaskHolder = null;
+        CurrentMaskChaser = null;
+
     }
     
     public void BeginNewEnemyCombat(MaskHolder holder)

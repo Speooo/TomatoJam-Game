@@ -6,6 +6,7 @@ public class EnemyRangedAttack : MonoBehaviour
     [SerializeField] private float attackCooldown;
     [SerializeField] private float attackRange;
     [SerializeField] private Transform shootPoint;
+    [SerializeField] private AudioClip shootAudio;
 
     private EnemyController controller;
     private MaskHolder playerMaskHolder;
@@ -22,7 +23,7 @@ public class EnemyRangedAttack : MonoBehaviour
         playerMaskHolder = controller.Player.GetComponent<MaskHolder>();
     }
 
-    public void HandleMelee()
+    public void HandleRangedAttack()
     {
         attackTimer -= Time.deltaTime;
         if (attackTimer > 0)
@@ -33,7 +34,7 @@ public class EnemyRangedAttack : MonoBehaviour
             attackTimer = attackCooldown;
             GameObject projectile = Instantiate(projectilePrefab, shootPoint.position, shootPoint.rotation);
             projectile.GetComponent<EnemyProjectile>().Initialise(shootPoint.position, controller.Player, playerMaskHolder);
-            Debug.Log("enemy shot projectile");
+            AudioManager.Instance.PlaySfx3D(shootAudio, shootPoint.position, 1f);
         }
     }
 }

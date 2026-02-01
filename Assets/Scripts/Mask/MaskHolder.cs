@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MaskHolder : MonoBehaviour
 {
-    private bool holdingMask;
+    public bool holdingMask {  get; private set; }
     private bool isEnemy;
     private EnemyController enemy;
 

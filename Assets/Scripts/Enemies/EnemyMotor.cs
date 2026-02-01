@@ -40,6 +40,9 @@ public class EnemyMotor : MonoBehaviour
     {
         if (hasPatrolPoint)
         {
+            if (!agent.isActiveAndEnabled || !agent.isOnNavMesh)
+                return;
+
             agent.SetDestination(currentPatrolPoint);
 
             if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)

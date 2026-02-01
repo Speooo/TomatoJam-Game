@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8179172314799015220}
   - component: {fileID: 1599691270075341859}
   - component: {fileID: 6724685669447433734}
+  - component: {fileID: 5765919367029273787}
   m_Layer: 6
   m_Name: Gargoyle
   m_TagString: Untagged
@@ -34,6 +35,7 @@ Transform:
   m_Children:
   - {fileID: 4124836171282932894}
   - {fileID: 8117040222604820490}
+  - {fileID: 4537859395091332991}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &8179172314799015220
@@ -72,7 +74,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   memoryTimeMax: 10
-  lifeForceMax: 30
+  lifeForceMax: 10
 --- !u!114 &6724685669447433734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,6 +87,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7113e432f9620b343b811596878dfd11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MaskHolder
+--- !u!114 &5765919367029273787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 824597595949958029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4d516ca0a8c32149919df24b50e8259, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyRangedAttack
+  projectilePrefab: {fileID: 499384503421938882, guid: fb262e2f3a898e2489cddd2443066ecb, type: 3}
+  attackCooldown: 2
+  attackRange: 30
+  shootPoint: {fileID: 4537859395091332991}
+  shootAudio: {fileID: 8300000, guid: ab67b3f3284f2c64b81259fac34d80aa, type: 3}
+--- !u!1 &8464512547958652997
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4537859395091332991}
+  m_Layer: 6
+  m_Name: Shoot Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4537859395091332991
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8464512547958652997}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 6, z: 4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7425784182993711265}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4518489049630835573
 PrefabInstance:
   m_ObjectHideFlags: 0

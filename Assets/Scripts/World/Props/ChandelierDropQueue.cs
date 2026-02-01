@@ -5,6 +5,7 @@ public class ChandelierDropQueue : MonoBehaviour
     [SerializeField] private float fallSpeed;
     [SerializeField] private GameObject explosion;
     [SerializeField] private AudioClip explosionSound;
+    [SerializeField] private GameObject destroyableFloor;
 
     private bool isInitialised = false;
     private bool hasSmashed = false;
@@ -26,6 +27,7 @@ public class ChandelierDropQueue : MonoBehaviour
             {
                 Instantiate(explosion, transform.position, Quaternion.identity);
                 AudioManager.Instance.PlaySfx3D(explosionSound, transform.position, 1f);
+                destroyableFloor.SetActive(false);
                 hasSmashed = true;
             }
         }

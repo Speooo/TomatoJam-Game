@@ -7,6 +7,7 @@ public class EnemyMelee : MonoBehaviour
 
     private EnemyController controller;
     private MaskHolder playerMaskHolder;
+    private PlayerHealth playerHealth;
 
     private float meleeTimer;
 
@@ -18,6 +19,7 @@ public class EnemyMelee : MonoBehaviour
     private void Start()
     {
         playerMaskHolder = controller.Player.GetComponent<MaskHolder>();
+        playerHealth = controller.Player.GetComponent<PlayerHealth>();
     }
 
     public void HandleMelee()
@@ -29,7 +31,15 @@ public class EnemyMelee : MonoBehaviour
 
         if (Vector3.Distance(transform.position, controller.Player.position) < meleeDistance)
         {
-            playerMaskHolder.TakeDamage();
+            if (playerMaskHolder.holdingMask)
+            {
+                playerMaskHolder.TakeDamage();
+            }
+            else
+            {
+                playerHealth.ReceiveHealthDamage(15f);
+            }
+
             Debug.Log("Dealt damage to player");
         }
     }

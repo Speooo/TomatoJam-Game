@@ -371,8 +371,9 @@ GameObject:
   - component: {fileID: 6902086807007801627}
   - component: {fileID: 7166827563770436505}
   - component: {fileID: 3359026257379905478}
+  - component: {fileID: 6110085904389871615}
   - component: {fileID: 7385060750165859751}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -512,6 +513,20 @@ MonoBehaviour:
   cameraCooldown: 1
   cameraFlash: {fileID: 8300000, guid: 7da3b98b9d2c5a8408c32ed1e2b523b9, type: 3}
   flashLight: {fileID: 3834585832034985268}
+--- !u!114 &6110085904389871615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5230727364238106318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5a6179a6ca283549aeacf5bb6bc855c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  maxHealth: 30
+  healthRegenMultiplier: 1
 --- !u!114 &7385060750165859751
 MonoBehaviour:
   m_ObjectHideFlags: 0

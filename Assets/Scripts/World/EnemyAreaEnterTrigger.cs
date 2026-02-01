@@ -2,15 +2,21 @@ using UnityEngine;
 
 public class EnemyAreaEnterTrigger : MonoBehaviour
 {
-    [SerializeField] private int enemyIndex;
+    [SerializeField] private GameObject targetPrefab;
+    [SerializeField] private Transform enemySpawnPoint;
+    [SerializeField] private AudioClip growl;
 
-    public event System.Action<int> OnPlayerEnterTrigger;
+    public event System.Action<GameObject, Vector3> OnPlayerEnterTrigger;
+
+    private bool hasTriggered = false;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (!hasTriggered && other.CompareTag("Player"))
         {
-            OnPlayerEnterTrigger.Invoke(enemyIndex);
+            OnPlayerEnterTrigger.Invoke(targetPrefab, enemySpawnPoint.position);
+            AudioManager.Instance.PlaySfx2D(growl, 1f);
+            hasTriggered = true;
         }
     }
 }

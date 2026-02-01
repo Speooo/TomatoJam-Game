@@ -3,16 +3,16 @@ using static UnityEngine.UI.Image;
 
 public class EnemyProjectile : MonoBehaviour
 {
-    [SerializeField] private LayerMask playerLayer;
     [SerializeField] private float speed;
-    [SerializeField] private float castRadius;
 
     private Vector3 direction;
     private MaskHolder playerMaskHolder;
+    private PlayerHealth playerHealth;
 
     public void Initialise(Vector3 shootPoint, Transform player, MaskHolder playerMaskHolder)
     {
         this.playerMaskHolder = playerMaskHolder;
+        playerHealth = playerMaskHolder.transform.GetComponent<PlayerHealth>();
 
         RaycastHit hitInfo;
 
@@ -26,10 +26,23 @@ public class EnemyProjectile : MonoBehaviour
     {
         Vector3 velocity = direction * speed * Time.deltaTime;
 
-        if (Physics.Raycast(transform.position, velocity, out RaycastHit hit, 0.1f, playerLayer))
+        if (Physics.SphereCast(transform.position, 0.5f, velocity.normalized, out RaycastHit hit, velocity.magnitude))
         {
-            playerMaskHolder.TakeDamage();
-            Debug.Log("projectile landed on player");
+            if (hit.transform.CompareTag("Player"))
+            {
+                if (playerMaskHolder.holdingMask)
+                {
+                    playerMaskHolder.TakeDamage();
+                }
+                else
+                {
+                    playerHealth.ReceiveHealthDamage(15f);
+                }
+
+                Debug.Log("projectile landed on player");
+            }
+            
+            Destroy(gameObject);
         }
         else
             transform.position += velocity;

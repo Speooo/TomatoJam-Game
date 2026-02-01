@@ -41,6 +41,7 @@ Transform:
   - {fileID: 2980893560705150903}
   - {fileID: 7519239565754649420}
   - {fileID: 2609691423398033897}
+  - {fileID: 3427123449401079189}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &337945023459464202
@@ -79,7 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   memoryTimeMax: 10
-  lifeForceMax: 30
+  lifeForceMax: 10
 --- !u!114 &177820541370381143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,10 +128,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4d516ca0a8c32149919df24b50e8259, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyRangedAttack
-  projectilePrefab: {fileID: 0}
-  attackCooldown: 0
-  attackRange: 0
-  shootPoint: {fileID: 0}
+  projectilePrefab: {fileID: 3818808009204471902, guid: 42eebad8795730f459b0249c5b75e483, type: 3}
+  attackCooldown: 2.5
+  attackRange: 30
+  shootPoint: {fileID: 3427123449401079189}
+  shootAudio: {fileID: 8300000, guid: ab8b440ee781eaf4d822e21b6940961c, type: 3}
 --- !u!114 &1654393028747636915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,6 +181,37 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!1 &9213419383775028108
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3427123449401079189}
+  m_Layer: 6
+  m_Name: ShootPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3427123449401079189
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9213419383775028108}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 4.5, z: 0.65}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2424684791516201652}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2604776554674441633
 PrefabInstance:
   m_ObjectHideFlags: 0
